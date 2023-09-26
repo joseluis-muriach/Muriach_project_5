@@ -21,18 +21,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 /*
-In this exercise we are going to see when you introduce a number if you have to pay taxes or not
+* In this exercise we are going to see if this number has a digit or two digits
 */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Exercise1(navController: NavController) {
+fun Exercise4_1(navController: NavController) {
     Text(
-        text = "Welcome to: 'CALCULATING SALARY'",
+        text = "Welcome to: 'ONE OR TWO DIGITS'",
         textAlign = TextAlign.Center,
         style = TextStyle(
             fontSize = 20.sp
@@ -49,39 +50,39 @@ fun Exercise1(navController: NavController) {
         verticalArrangement = Arrangement.Center
     ) {
 
-        var inputSalary by remember { mutableStateOf("")}
-        val threeThousand by remember { mutableStateOf(3000.0)}
-        var taxes by remember { mutableStateOf("") }
+        var firstNumber by remember { mutableStateOf("") }
 
-        OutlinedTextField(value = inputSalary,
-            onValueChange = {inputSalary = it},
+        OutlinedTextField(value = firstNumber,
+            onValueChange = {firstNumber = it},
             label = {
-                Text("Introduce your salary: ")
-                },
+                Text("Introduce the number: ")
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp),
             singleLine = true
-            )
+        )
 
+        var textOfResult by remember { mutableStateOf("") }
         Button(onClick = {
-            if (inputSalary.toDouble() >= threeThousand) {
-                taxes = "You must to pay taxes"
+
+            if (firstNumber.toDouble() >= 0 && firstNumber.toDouble() < 10 ) {
+                textOfResult = "The number $firstNumber has one digits"
+            } else if(firstNumber.toDouble() >= 10 && firstNumber.toDouble() < 100){
+                textOfResult = "The number $firstNumber has two digits"
             } else {
-                taxes = "Don't pay taxes"
+                textOfResult = "The number $firstNumber hasn't one or two digits"
             }
         },
             modifier = Modifier.padding(10.dp)) {
-            
-            Text(text = "Calculate")
+
+            Text(text = "Click")
         }
 
-        Text(
-            text = taxes,
+        Text(text = textOfResult,
             modifier = Modifier.padding(10.dp),
             style = TextStyle(
-                fontSize = 20.sp
-            )
+                fontSize = 20.sp)
         )
 
         //This button allows to go to "Cover" (also in Exercises 2,3 and 4)

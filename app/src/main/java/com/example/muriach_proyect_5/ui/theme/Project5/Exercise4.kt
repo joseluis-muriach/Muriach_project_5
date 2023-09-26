@@ -21,18 +21,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 /*
-In this exercise we are going to see when you introduce a number if you have to pay taxes or not
+In this exercise we are going to calculate the average of three numbers, if the result is biggest
+* or equal than 7, the student ''promote' if not 'doesn't promote'
 */
+@Preview(showBackground = true)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Exercise1(navController: NavController) {
+fun Exercise4(navController: NavController) {
     Text(
-        text = "Welcome to: 'CALCULATING SALARY'",
+        text = "Welcome to: 'CALCULATE THE AVERAGE'",
         textAlign = TextAlign.Center,
         style = TextStyle(
             fontSize = 20.sp
@@ -49,39 +52,68 @@ fun Exercise1(navController: NavController) {
         verticalArrangement = Arrangement.Center
     ) {
 
-        var inputSalary by remember { mutableStateOf("")}
-        val threeThousand by remember { mutableStateOf(3000.0)}
-        var taxes by remember { mutableStateOf("") }
+        var firstNumber by remember { mutableStateOf("") }
+        var secondNumber by remember { mutableStateOf("") }
+        var thirdNumber by remember { mutableStateOf("") }
+        var average by remember { mutableStateOf("") }
+        val numberThree by remember { mutableStateOf("3") }
 
-        OutlinedTextField(value = inputSalary,
-            onValueChange = {inputSalary = it},
+
+        OutlinedTextField(value = firstNumber,
+            onValueChange = {firstNumber = it},
             label = {
-                Text("Introduce your salary: ")
-                },
+                Text("Introduce first number: ")
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp),
             singleLine = true
-            )
+        )
 
+        OutlinedTextField(value = secondNumber,
+            onValueChange = {secondNumber = it},
+            label = {
+                Text("Introduce second number: ")
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp),
+            singleLine = true
+        )
+
+        OutlinedTextField(value = thirdNumber,
+            onValueChange = {thirdNumber = it},
+            label = {
+                Text("Introduce third number: ")
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp),
+            singleLine = true
+        )
+
+
+        var textOfResult by remember { mutableStateOf("") }
         Button(onClick = {
-            if (inputSalary.toDouble() >= threeThousand) {
-                taxes = "You must to pay taxes"
+            average = (
+                    (firstNumber.toDouble() + secondNumber.toDouble() +
+                            thirdNumber.toDouble()) / numberThree.toDouble()).toString()
+
+            if (average.toDouble() >= 7) {
+                textOfResult = "PROMOTE"
             } else {
-                taxes = "Don't pay taxes"
+                textOfResult = "DON'T PROMOTE"
             }
         },
             modifier = Modifier.padding(10.dp)) {
-            
+
             Text(text = "Calculate")
         }
 
-        Text(
-            text = taxes,
+        Text(text = textOfResult,
             modifier = Modifier.padding(10.dp),
             style = TextStyle(
-                fontSize = 20.sp
-            )
+                fontSize = 20.sp)
         )
 
         //This button allows to go to "Cover" (also in Exercises 2,3 and 4)

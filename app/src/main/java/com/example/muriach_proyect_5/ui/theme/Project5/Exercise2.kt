@@ -26,13 +26,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 /*
-In this exercise we are going to see when you introduce a number if you have to pay taxes or not
+In this exercise we can see what number is biggest
 */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Exercise1(navController: NavController) {
+fun Exercise2(navController: NavController) {
     Text(
-        text = "Welcome to: 'CALCULATING SALARY'",
+        text = "Welcome to: 'COMPARE TWO NUMBERS'",
         textAlign = TextAlign.Center,
         style = TextStyle(
             fontSize = 20.sp
@@ -49,35 +49,48 @@ fun Exercise1(navController: NavController) {
         verticalArrangement = Arrangement.Center
     ) {
 
-        var inputSalary by remember { mutableStateOf("")}
-        val threeThousand by remember { mutableStateOf(3000.0)}
-        var taxes by remember { mutableStateOf("") }
+        var firstNumber by remember { mutableStateOf("") }
+        var secondNumber by remember { mutableStateOf("") }
+        var result by remember { mutableStateOf("") }
 
-        OutlinedTextField(value = inputSalary,
-            onValueChange = {inputSalary = it},
+        OutlinedTextField(value = firstNumber,
+            onValueChange = {firstNumber = it},
             label = {
-                Text("Introduce your salary: ")
-                },
+                Text("Introduce first number: ")
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp),
             singleLine = true
-            )
+        )
+
+        OutlinedTextField(value = secondNumber,
+            onValueChange = {secondNumber = it},
+            label = {
+                Text("Introduce second number: ")
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp),
+            singleLine = true
+        )
 
         Button(onClick = {
-            if (inputSalary.toDouble() >= threeThousand) {
-                taxes = "You must to pay taxes"
+            if (firstNumber.toDouble() > secondNumber.toDouble()) {
+                result = "The first number is biggest than second"
+            } else if (firstNumber.toDouble() < secondNumber.toDouble()){
+                result = "The second number is biggest than first"
             } else {
-                taxes = "Don't pay taxes"
+                result = "The numbers are equals"
             }
         },
             modifier = Modifier.padding(10.dp)) {
-            
-            Text(text = "Calculate")
+
+            Text(text = "Compare")
         }
 
         Text(
-            text = taxes,
+            text = result,
             modifier = Modifier.padding(10.dp),
             style = TextStyle(
                 fontSize = 20.sp
